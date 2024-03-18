@@ -29,7 +29,8 @@ enum Lumps
 };
 
 struct Vector3D { float x, y, z; };
-struct BSP {
+struct BSP 
+{
     std::vector<Vector3D> vertices;
     std::vector<std::vector<short>> edges;
 };
