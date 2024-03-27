@@ -5,7 +5,7 @@
 #include <cstring>
 
 #define CHARS_TO_I32(raw, shift) (raw[(shift + 3)] << 24 | raw[(shift) + 2] << 16 | raw[(shift) + 1] << 8 | raw[(shift)])
-#define CHARS_TO_I16(raw, shift) (raw[(shift) + 2] << 16 | raw[(shift) + 1] << 8 | raw[(shift)])
+#define CHARS_TO_I16(raw, shift) (raw[(shift) + 1] << 8 | raw[(shift)])
 
 enum Lumps
 {
