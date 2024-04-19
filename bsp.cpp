@@ -33,18 +33,16 @@ BSP ParseBSP(std::vector<unsigned char> buffer)
     // Parse vertices
     std::pair<int, int> vertexData = lumpData[Lumps::VERTICES];
     std::vector<Vector3D> vertices;
-    for (int offset = 0; offset < vertexData.second; offset += 12)
+    for (int offset = 0; offset < vertexData.second; offset += sizeof(Vector3D))
     {
-        float x, y, z;
-        memcpy(&x, &buffer[vertexData.first + offset], sizeof(x));
-        memcpy(&y, &buffer[vertexData.first + offset + 4], sizeof(y));
-        memcpy(&z, &buffer[vertexData.first + offset + 8], sizeof(z));
-        vertices.push_back({x, y, z});
+        Vector3D vertex;
+        memcpy(&vertex, &buffer[vertexData.first + offset], sizeof(vertex));
+        vertices.push_back(vertex);
     }
 
     // Parse edges
     std::pair<int, int> edgeData = lumpData[Lumps::EDGES];
-    std::vector<std::vector<short>> edges;
+    std::vector<std::pair<short, short>> edges;
     for (int offset = 0; offset < edgeData.second; offset += 4)
     {
         short a = CHARS_TO_I16(buffer, offset);
@@ -52,7 +50,17 @@ BSP ParseBSP(std::vector<unsigned char> buffer)
         edges.push_back({a, b});
     }
 
+    // Parse planes
+    std::pair<int, int> planeData = lumpData[Lumps::PLANES];
+    std::vector<Plane> planes;
+    for (int offset = 0; offset < planeData.second; offset += sizeof(Plane))
+    {
+        Plane plane;
+        memcpy(&plane, &buffer[planeData.first + offset], sizeof(plane));
+        planes.push_back(plane);
+    }
+
     // Return bsp object
-    BSP bsp{vertices, edges};
+    BSP bsp{vertices, edges, planes};
     return bsp;
 }

@@ -29,10 +29,19 @@ enum Lumps
 };
 
 struct Vector3D { float x, y, z; };
+struct Plane
+{
+    Vector3D vertex;
+    float dist;
+    uint32_t type;
+};
+
+
 struct BSP 
 {
     std::vector<Vector3D> vertices;
-    std::vector<std::vector<short>> edges;
+    std::vector<std::pair<short, short>> edges;
+    std::vector<Plane> planes;
 };
 
 BSP parseBSP(std::vector<unsigned char> buffer);
