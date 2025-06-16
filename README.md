@@ -1,2 +1,2 @@
 # BSPP
-**Portable BSP** (**BSPP**) is a C++ library for parsing Quake BSP maps.
+**Portable BSP** (**BSPP**) is a C stb-like library for parsing Quake BSP maps.
